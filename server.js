@@ -1,7 +1,7 @@
 // ScaleDesk live job server. Needs Node 18 or newer. No packages to install.
 // It collects open jobs from several sources, keeps the newest, and pushes new ones to the page.
 const http = require('http');
-const rooms = require('./rooms');
+const rooms = require('./rooms.js');
 
 const PORT = process.env.PORT || 3000;
 const ACCESS_KEY = process.env.ACCESS_KEY || '';          // optional password for the feed
