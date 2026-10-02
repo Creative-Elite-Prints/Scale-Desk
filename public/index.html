@@ -3,32 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ScaleDesk – Live Job Feed & Freelance Hub</title>
+<title>ScaleDesk – Find jobs, send proposals, manage clients</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0f1c;--surface:#151b2e;--ink:#eaeefb;--muted:#9aa5c4;--accent:#38bdf8;--on-accent:#0b0f1c;--line:#262e48;--tag:#262050}
+:root{--bg:#eef1f6;--surface:#fff;--ink:#0e1424;--muted:#55607a;--accent:#5b3df5;--on-accent:#fff;--line:#d9deea;--tag:#e7e3ff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0f1c;--surface:#151b2e;--ink:#eaeefb;--muted:#9aa5c4;--accent:#8b78ff;--on-accent:#0b0f1c;--line:#262e48;--tag:#262050}}
+:root[data-theme="dark"]{--bg:#0b0f1c;--surface:#151b2e;--ink:#eaeefb;--muted:#9aa5c4;--accent:#8b78ff;--on-accent:#0b0f1c;--line:#262e48;--tag:#262050}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 Manrope,system-ui,sans-serif;padding-bottom:40px}
-h1,h2,h3{font-family:Sora,sans-serif;margin:0;letter-spacing:-.02em}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 Manrope,system-ui,sans-serif}
+h1,h2,h3{font-family:Sora,"Helvetica Neue",Arial,sans-serif;margin:0;letter-spacing:-.02em}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .wrap{max-width:1040px;margin:0 auto;padding:0 20px 40px}
 
 /* Header & Nav */
-header{display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--line)}
-.logo{font:800 22px Sora,sans-serif;color:var(--accent)}
+header{display:flex;justify-content:space-between;align-items:center;padding:20px 0 8px}
+.logo{font:800 22px Sora,sans-serif}
 .nav-right{display:flex;align-items:center;gap:12px}
 
 /* Guides Dropdown */
 .dropdown{position:relative;display:inline-block}
 .dropbtn{background:var(--surface);color:var(--ink);border:1px solid var(--line);padding:8px 14px;font-size:0.875rem;border-radius:8px;cursor:pointer;font-weight:600}
 .dropbtn:hover{background:var(--line)}
-.dropdown-content{display:none;position:absolute;right:0;background-color:var(--surface);min-width:220px;box-shadow:0px 8px 16px rgba(0,0,0,0.5);border:1px solid var(--line);border-radius:8px;overflow:hidden;z-index:100}
+.dropdown-content{display:none;position:absolute;right:0;background-color:var(--surface);min-width:220px;box-shadow:0px 8px 16px rgba(0,0,0,0.15);border:1px solid var(--line);border-radius:8px;overflow:hidden;z-index:100}
 .dropdown-content a{color:var(--ink);padding:12px 16px;text-decoration:none;display:block;font-size:0.85rem;border-bottom:1px solid var(--line)}
 .dropdown-content a:hover{background-color:var(--line);color:var(--accent)}
 .dropdown:hover .dropdown-content{display:block}
 
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 20px}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-.stat b{display:block;font:800 24px Sora,sans-serif;color:var(--accent)}
+.stat b{display:block;font:800 26px Sora,sans-serif}
 .stat span{font-size:13px;color:var(--muted)}
 
 .tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:18px}
@@ -39,24 +44,21 @@ input,select,textarea{font:inherit;padding:11px 13px;border-radius:8px;border:1p
 textarea{min-height:110px;resize:vertical}
 label{font-size:14px;font-weight:500;display:block;margin:12px 0 4px}
 
-.btn{font:700 14px Sora,sans-serif;background:var(--accent);color:var(--on-accent);border:0;border-radius:8px;padding:10px 16px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn{font:700 15px Sora,sans-serif;background:var(--accent);color:var(--on-accent);border:0;border-radius:8px;padding:11px 18px;cursor:pointer}
 .btn.alt{background:none;color:var(--ink);border:1.5px solid var(--line)}
 .btn.sm{padding:6px 12px;font-size:13px}
 
 .bar{display:grid;grid-template-columns:1fr 200px;gap:10px;margin-bottom:12px}
-.live{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px;font-size:14px;color:var(--muted)}
-.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#0a9f62;margin-right:8px}
-.srv{display:grid;grid-template-columns:1fr 170px 100px;gap:8px;margin-bottom:12px}
-
-.job{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:12px;display:grid;grid-template-columns:1fr auto;gap:8px 18px}
+.job{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:10px;display:grid;grid-template-columns:1fr auto;gap:8px 18px}
 .job h3{font-size:17px;font-weight:600}
-.job p{margin:6px 0 0;color:var(--muted);font-size:14px;white-space:pre-line}
-.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;font-size:12px}
-.meta span{background:var(--tag);padding:3px 10px;border-radius:99px;color:#e0f2fe}
+.job p{margin:4px 0 0;color:var(--muted);font-size:14px;white-space:pre-line}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;font-size:12px}
+.meta span{background:var(--tag);padding:2px 9px;border-radius:99px}
+.meta .badge{background:var(--accent);color:var(--on-accent)}
 
 .side{text-align:right}
-.quote-tag{background:#0369a1;color:#e0f2fe;font-size:0.75rem;font-weight:700;padding:4px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:0.5px}
-.acts{display:flex;gap:6px;margin-top:12px;justify-content:flex-end}
+.quote-tag{font:700 13px Sora,sans-serif;background:var(--accent);color:var(--on-accent);padding:4px 10px;border-radius:6px;display:inline-block}
+.acts{display:flex;gap:6px;margin-top:8px;justify-content:flex-end}
 
 .two{display:grid;grid-template-columns:1fr 1.2fr;gap:24px}
 .out{white-space:pre-wrap;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-height:260px}
@@ -64,245 +66,333 @@ label{font-size:14px;font-weight:500;display:block;margin:12px 0 4px}
 .col{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;min-height:200px}
 .col h3{font-size:15px;margin-bottom:10px}
 .lead{border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px;font-size:14px}
+.lead b{display:block;font-weight:700}
+.lead div{display:flex;gap:6px;margin-top:8px}
+
+.people{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.person{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.person h3{font-size:17px}
+.person p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.person .row{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:14px}
+.st.available{color:#0a7d4f}.st.busy{color:#b7791f}.st.offline{color:var(--muted)}
+@media (prefers-color-scheme:dark){.st.available{color:#4ade9a}.st.busy{color:#f6c453}}
+.badge2{font:700 12px Manrope,sans-serif;background:var(--accent);color:var(--on-accent);padding:2px 8px;border-radius:99px;margin-left:6px;vertical-align:middle}
+.bar.b3{grid-template-columns:1fr 190px 230px}
+.srv{display:grid;grid-template-columns:1fr 170px 100px;gap:8px;margin-bottom:12px}
+a.btn{display:inline-block;text-decoration:none}
 
 dialog{max-width:580px;width:calc(100% - 32px);border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);padding:22px}
-dialog::backdrop{background:rgba(0,0,0,0.75)}
-@media (max-width:820px){.stats,.board,.two{grid-template-columns:1fr}.job{grid-template-columns:1fr}.side{text-align:left}.acts{justify-content:flex-start}.bar,.srv{grid-template-columns:1fr}}
+dialog::backdrop{background:rgba(10,14,28,.55)}
+.live{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px;font-size:14px;color:var(--muted)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#0a9f62;margin-right:8px}
+.note{font-size:13px;color:var(--muted);margin-top:18px}
+
+@media (max-width:820px){.stats{grid-template-columns:1fr 1fr}.two,.board,.people{grid-template-columns:1fr}.job{grid-template-columns:1fr}.side{text-align:left}.acts{justify-content:flex-start}.bar,.bar.b3,.srv{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <div class="logo">ScaleDesk</div>
-    <div class="nav-right">
-      <div class="dropdown">
-        <button class="dropbtn">Guides & How-To ▼</button>
-        <div class="dropdown-content">
-          <a href="#" onclick="showGuide('proposals')">How to Write Winning Quotes</a>
-          <a href="#" onclick="showGuide('pricing')">Setting Your Freelance Rates</a>
-          <a href="#" onclick="showGuide('closing')">Closing High-Value Clients</a>
-        </div>
-      </div>
-      <a href="/admin.html" class="btn sm">Project Rooms / Admin</a>
-    </div>
-  </header>
-
-  <div class="stats">
-    <div class="stat"><b id="s1">0</b><span>Leads saved</span></div>
-    <div class="stat"><b id="s2">0</b><span>Proposals sent</span></div>
-    <div class="stat"><b id="s3">0</b><span>In talks</span></div>
-    <div class="stat"><b id="s4">$0</b><span>Won value</span></div>
-  </div>
-
-  <div class="tabs" role="tablist">
-    <button class="tab" role="tab" data-t="jobs" aria-selected="true">Find jobs</button>
-    <button class="tab" role="tab" data-t="prop" aria-selected="false">Write proposal</button>
-    <button class="tab" role="tab" data-t="pipe" aria-selected="false">Clients</button>
-  </div>
-
-  <div id="jobs">
-    <div class="bar">
-      <input id="q" type="search" placeholder="Search jobs, e.g. Shopify, Unity, React">
-      <select id="cat"></select>
-    </div>
-    <div class="live">
-      <span><i class="dot" id="ld"></i><span id="ls">Connecting live feed...</span></span>
-      <span>
-        <button class="btn alt sm" id="rf" type="button">Refresh</button>
-        <button class="btn alt sm" id="pz" type="button">Pause live</button>
-      </span>
-    </div>
-    <div class="srv">
-      <input id="srv" placeholder="Live server address (https://...)">
-      <input id="key" type="password" placeholder="Access key (if set)">
-      <button class="btn sm" id="cn" type="button">Connect</button>
-    </div>
-    <div id="jl"></div>
-  </div>
-
-  <div id="prop" hidden>
-    <div class="two">
-      <div>
-        <label for="pj">Job</label><select id="pj"></select>
-        <label for="pn">Your name</label><input id="pn" value="Jene van der Walt">
-        <label for="pb">Business name</label><input id="pb" value="Scale Desk">
-        <label for="pc">Contact details</label><input id="pc" placeholder="you@example.com">
-        <label for="ps">What you offer</label><textarea id="ps">Scale Desk delivers websites, apps and games with clear milestones and regular updates.</textarea>
-        <label for="pt">Tone</label>
-        <select id="pt"><option value="friendly">Friendly</option><option value="pro">Professional</option><option value="short">Short</option></select>
-        <p><button class="btn" id="gen" type="button">Generate proposal</button></p>
-      </div>
-      <div>
-        <div class="out" id="po" aria-live="polite">Your proposal will appear here.</div>
-        <p style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn alt" id="cp" type="button">Copy text</button><button class="btn alt" id="ap" type="button">Mark as sent</button></p>
+<header>
+  <span class="logo">ScaleDesk</span>
+  <div class="nav-right">
+    <div class="dropdown">
+      <button class="dropbtn" type="button">Guides & How-To ▼</button>
+      <div class="dropdown-content">
+        <a href="#" onclick="showGuide('proposals')">How to Write Winning Quotes</a>
+        <a href="#" onclick="showGuide('pricing')">Setting Your Freelance Rates</a>
+        <a href="#" onclick="showGuide('closing')">Closing High-Value Clients</a>
       </div>
     </div>
+    <span style="color:var(--muted);font-size:14px">Jobs, proposals and clients</span>
   </div>
+</header>
 
-  <div id="pipe" hidden>
-    <p><button class="btn alt sm" id="roomsBtn" type="button">Open Project Rooms</button></p>
-    <div class="board" id="board"></div>
+<div class="stats">
+  <div class="stat"><b id="s1">0</b><span>Leads saved</span></div>
+  <div class="stat"><b id="s2">0</b><span>Proposals sent</span></div>
+  <div class="stat"><b id="s3">0</b><span>In talks</span></div>
+  <div class="stat"><b id="s4">$0</b><span>Won value</span></div>
+</div>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" data-t="jobs" aria-selected="true">Find jobs</button>
+  <button class="tab" role="tab" data-t="prop" aria-selected="false">Write proposal</button>
+  <button class="tab" role="tab" data-t="pipe" aria-selected="false">Clients</button>
+  <button class="tab" role="tab" data-t="free" aria-selected="false">Freelancers</button>
+</div>
+
+<div id="jobs">
+  <div class="bar"><input id="q" type="search" placeholder="Search jobs, e.g. Shopify, Unity, React" aria-label="Search jobs"><select id="cat" aria-label="Job type"></select></div>
+  <div class="live"><span><i class="dot" id="ld"></i><span id="ls">Connecting...</span></span><span><button class="btn alt sm" id="rf" type="button">Refresh</button> <button class="btn alt sm" id="pz" type="button">Pause live</button></span></div>
+  <div class="srv"><input id="srv" placeholder="Live server address (https://...)" aria-label="Live server address"><input id="key" type="password" placeholder="Access key (if set)" aria-label="Access key"><button class="btn sm" id="cn" type="button">Connect</button></div>
+  <div id="jl"></div>
+</div>
+
+<div id="prop" hidden>
+  <div class="two">
+    <div>
+      <label for="pj">Job</label><select id="pj"></select>
+      <label for="pn">Your name</label><input id="pn" value="Jene van der Walt">
+      <label for="pb">Business name</label><input id="pb" value="Scale Desk">
+      <label for="pc">Your email or phone (added to the message)</label><input id="pc" placeholder="you@example.com">
+      <label for="ps">What you offer</label><textarea id="ps">Scale Desk delivers websites, apps and games with clear milestones and regular progress updates.</textarea>
+      <label for="pt">Tone</label><select id="pt"><option value="friendly">Friendly</option><option value="pro">Professional</option><option value="short">Short</option></select>
+      <p><button class="btn" id="gen" type="button">Generate proposal</button></p>
+    </div>
+    <div>
+      <div class="out" id="po" aria-live="polite">Your proposal will appear here.</div>
+      <p style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn alt" id="cp" type="button">Copy text</button><a class="btn alt" id="em" href="#" target="_blank" rel="noopener">Email</a><a class="btn alt" id="wa" href="#" target="_blank" rel="noopener">WhatsApp</a><button class="btn alt" id="ap" type="button">Mark as sent</button></p>
+    </div>
   </div>
 </div>
 
-<!-- Quotation Dialog -->
-<dialog id="bd">
-  <h3 id="bdt" style="margin-bottom:8px; color:var(--accent);">Submit Quotation</h3>
-  <p id="bdm" style="font-size:0.85rem; color:var(--muted); margin-bottom:12px;"></p>
-  <label for="ba">Your Proposed Quote ($)</label><input id="ba" type="number" min="1" placeholder="e.g. 500">
-  <label for="bdays">Estimated Delivery Time (days)</label><input id="bdays" type="number" min="1" placeholder="e.g. 5">
-  <label for="bp">Proposal & Pitch Message</label><textarea id="bp" placeholder="Detail your experience and approach..."></textarea>
-  <p style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px">
-    <button class="btn" id="bs" type="button">Submit Proposal</button>
-    <button class="btn alt" id="bcp" type="button">Copy Message</button>
-    <button class="btn alt" id="bc" type="button">Cancel</button>
-  </p>
+<div id="pipe" hidden><p><button class="btn alt sm" id="rooms" type="button">Open project rooms</button> <span class="note" id="rn">Private rooms for a client and developer. Needs your server, connected on the Find jobs tab.</span></p><div class="board" id="board"></div></div>
+
+<div id="free" hidden>
+  <div class="bar b3"><input id="fq" type="search" placeholder="Search by skill, e.g. Unity, React, design" aria-label="Search freelancers"><select id="fa" aria-label="Availability"><option>Any availability</option><option>Available now</option><option>Busy</option><option>Offline</option></select><select id="fmj" aria-label="Rank freelancers for a job"><option value="">Rank by job: none</option></select></div>
+  <div id="fm" hidden style="margin-bottom:20px">
+    <h3 id="fmt" style="margin-bottom:6px"></h3>
+    <p class="note" style="margin:0 0 6px">Uses your name and contact from the Write proposal tab.</p>
+    <label for="fj">Job to offer</label><select id="fj"></select>
+    <div class="out" id="fo" style="margin-top:10px;min-height:120px"></div>
+    <p style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn alt" id="fcp" type="button">Copy message</button><a class="btn alt" id="fem" href="#" target="_blank" rel="noopener">Email</a><a class="btn alt" id="fwa" href="#" target="_blank" rel="noopener">WhatsApp</a><button class="btn alt" id="fcl" type="button">Close</button></p>
+  </div>
+  <p class="note" id="fc" style="margin:0 0 12px"></p>
+  <div class="people" id="fl"></div>
+  <h3 style="margin:30px 0 4px">List yourself as available</h3>
+  <div class="two">
+    <div>
+      <label for="fn">Name</label><input id="fn">
+      <label for="fs">Skills, separated by commas</label><input id="fs" placeholder="React, Node, UI design">
+      <label for="fr">Hourly rate (USD)</label><input id="fr" type="number" min="1" placeholder="35">
+      <p><button class="btn" id="fadd" type="button">Add my profile</button></p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Quotation Dialog Modal -->
+<dialog id="bd" aria-labelledby="bdt">
+  <h3 id="bdt" style="margin-bottom:4px"></h3>
+  <p class="note" id="bdm" style="margin:0 0 6px"></p>
+  <label for="ba">Your quotation bid (USD)</label><input id="ba" type="number" min="1" placeholder="e.g. 500">
+  <label for="bdays">Delivery in (days)</label><input id="bdays" type="number" min="1" placeholder="e.g. 7">
+  <label for="bp">Message to the client</label><textarea id="bp" style="min-height:200px"></textarea>
+  <p style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px"><button class="btn" id="bs" type="button">Submit bid</button><button class="btn alt" id="bcp" type="button">Copy message</button><button class="btn alt" id="bc" type="button">Cancel</button></p>
 </dialog>
 
 <!-- Guide Modal -->
 <dialog id="guideModal">
-  <h3 id="guideTitle" style="color:var(--accent); margin-bottom:10px;"></h3>
-  <p id="guideBody" style="font-size:0.95rem; line-height:1.6; color:var(--ink); margin-bottom:16px;"></p>
-  <button class="btn alt" onclick="document.getElementById('guideModal').close()">Close</button>
+  <h3 id="guideTitle" style="margin-bottom:8px; color:var(--accent);"></h3>
+  <p id="guideBody" style="font-size:0.95rem; line-height:1.6; margin-bottom:16px;"></p>
+  <button class="btn alt sm" type="button" onclick="document.getElementById('guideModal').close()">Close</button>
 </dialog>
 
 <script>
 (function(){
-  var jobs = [];
-  var stages = ["Found", "Applied", "In talks", "Won"], pipe = [];
-  try{ pipe = JSON.parse(localStorage.getItem('sd_pipe') || '[]'); } catch(e){ pipe = []; }
+  var jobs=[
+   {id:1,t:"E-commerce website for handmade candles",c:"Websites",s:"Freelancer",d:"Shopify store, 20 products, payments and shipping rules."},
+   {id:2,t:"Mobile puzzle game in Unity",c:"Games",s:"Freelancer",d:"Casual puzzle game for Android and iOS with 60 levels."},
+   {id:3,t:"WordPress site for a dental clinic",c:"Websites",s:"Freelancer",d:"Five page site with booking form and local SEO setup."},
+   {id:4,t:"Multiplayer game server and lobby",c:"Games",s:"Remotive",d:"Realtime lobby, matchmaking and leaderboards."},
+   {id:5,t:"React dashboard for logistics data",c:"Web apps",s:"RemoteOK",d:"Charts and filters over delivery data from a REST API."},
+   {id:6,t:"Flutter app for a food delivery startup",c:"Mobile apps",s:"Freelancer",d:"Ordering, live tracking and push notifications."},
+   {id:7,t:"Chatbot for customer support",c:"AI and automation",s:"RemoteOK",d:"Connect a language model to a help centre and ticket system."},
+   {id:8,t:"Booking system with payments",c:"Web apps",s:"Freelancer",d:"Calendar, deposits and email reminders for a salon chain."}
+  ];
+  var stages=["Found","Applied","In talks","Won"],pipe=[],cur=null;
+  try{pipe=JSON.parse(localStorage.getItem('sd_pipe')||'[]')}catch(e){pipe=[]}
+  function save(){try{localStorage.setItem('sd_pipe',JSON.stringify(pipe))}catch(e){}}
+  function esc(s){return String(s||'').replace(/[&<>"]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]})}
+  function $(i){return document.getElementById(i)}
+  function money(n){return '$'+(n||0).toLocaleString('en-US')}
+  function find(id){return jobs.filter(function(j){return j.id===id})[0]}
 
-  function save(){ try{ localStorage.setItem('sd_pipe', JSON.stringify(pipe)); }catch(e){} }
-  function esc(s){ return String(s||'').replace(/[&<>"]/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]; }); }
-  function $(i){ return document.getElementById(i); }
-  function find(id){ return jobs.filter(j => j.id === id)[0]; }
-
-  function stats(){
-    $('s1').textContent = pipe.length;
-    $('s2').textContent = pipe.filter(p => p.stage >= 1).length;
-    $('s3').textContent = pipe.filter(p => p.stage === 2).length;
-    $('s4').textContent = '$' + pipe.filter(p => p.stage === 3).reduce((a,p) => a + (p.bid || 0), 0).toLocaleString();
+  function lead(id,stage){
+    var e=pipe.filter(function(p){return p.id===id})[0];
+    if(e){if(stage>e.stage)e.stage=stage}else{var j=find(id);if(!j)return;pipe.push({id:id,t:j.t,s:j.s,stage:stage})}
+    save();board();stats();
   }
 
+  function stats(){
+    $('s1').textContent=pipe.length;
+    $('s2').textContent=pipe.filter(function(p){return p.stage>=1}).length;
+    $('s3').textContent=pipe.filter(function(p){return p.stage===2}).length;
+    $('s4').textContent=money(pipe.filter(function(p){return p.stage===3}).reduce(function(a,p){return a+(p.bid||0)},0));
+  }
+
+  var cats=["All types"].concat(Array.from(new Set(jobs.map(function(j){return j.c}))));
+  $('cat').innerHTML=cats.map(function(c){return '<option>'+esc(c)+'</option>'}).join('');
+  $('pj').innerHTML=jobs.map(function(j){return '<option value="'+j.id+'">'+esc(j.t)+'</option>'}).join('');
+
   function list(){
-    var t = $('q').value.toLowerCase(), c =$('cat').value;
-    var out = jobs.filter(j => (c === "All types" || j.c === c) && (!t || (j.t + ' ' + (j.fullDesc||j.d)).toLowerCase().indexOf(t) > -1)).slice(0, 50);
-    
-    $('jl').innerHTML = out.length ? out.map(j => {
-      var age = j.t0 ? Math.max(0, Math.round((Date.now() - j.t0) / 1000)) : -1;
-      var bd = pipe.filter(p => p.id === j.id && p.bid)[0];
-      return `<article class="job">
-        <div>
-          <h3>${esc(j.t)}</h3>
-          <p>${esc(j.fullDesc || j.d)}</p>
-          <div class="meta">
-            <span>${esc(j.c || 'General')}</span>
-            <span>${esc(j.s || 'Feed')}</span>
-            ${age >= 0 ? `<span>${age < 60 ? age + 's ago' : Math.floor(age/60) + 'm ago'}</span>` : ''}
-          </div>
-        </div>
-        <div class="side">
-          <span class="quote-tag">Quote Required</span>
-          <div class="acts">
-            <button class="btn sm" data-bid="${j.id}">${bd ? 'Quote Sent: $' + bd.bid : 'Submit Quote'}</button>
-          </div>
-        </div>
-      </article>`;
-    }).join('') : '<p style="color:var(--muted)">No active jobs found.</p>';
+    var t=$('q').value.toLowerCase(),c=$('cat').value;
+    var out=jobs.filter(function(j){return (c==="All types"||j.c===c)&&(!t||(j.t+' '+(j.fullDesc||j.d)).toLowerCase().indexOf(t)>-1)}).slice(0,50);
+    $('jl').innerHTML=out.length?out.map(function(j){
+      var age=j.t0?Math.max(0,Math.round((Date.now()-j.t0)/1000)):-1;var bd=pipe.filter(function(p){return p.id===j.id&&p.bid})[0];
+      return '<article class="job"><div><h3>'+esc(j.t)+'</h3><p>'+esc(j.fullDesc||j.d)+'</p><div class="meta">'+(age>=0&&age<6?'<span class="badge">New</span>':'')+'<span>'+esc(j.c)+'</span><span>'+esc(j.s)+'</span>'+(j.loc?'<span>'+esc(j.loc)+'</span>':'')+(age>=0?'<span>'+(age<60?age+'s ago':Math.floor(age/60)+' min ago')+'</span>':'')+'</div>'+mt(j)+'</div><div class="side"><div class="quote-tag">Quote Required</div><div class="acts"><button class="btn alt sm" data-save="'+j.id+'">Save lead</button><button class="btn alt sm" data-write="'+j.id+'">Write proposal</button><button class="btn sm" data-bid="'+j.id+'">'+(bd?'Bid placed: '+money(bd.bid):'Place bid')+'</button>'+(j.url&&/^https:\/\//.test(j.url)?'<a class="btn alt sm" href="'+esc(j.url)+'" target="_blank" rel="noopener noreferrer">Open original</a>':'')+'</div></div></article>';
+    }).join(''):'<p style="color:var(--muted)">No jobs match. Try another search or type.</p>';
   }
 
   function board(){
-    $('board').innerHTML = stages.map((s,i) => {
-      var items = pipe.filter(p => p.stage === i);
-      return `<div class="col">
-        <h3>${s} (${items.length})</h3>
-        ${items.map(p => `<div class="lead">
-          <b>${esc(p.t)}</b>${p.bid ? 'Your Quote: $' + p.bid + ' in ' + p.days + ' days' : 'Quote Pending'}
-          <div style="display:flex;gap:4px;margin-top:6px;">
-            ${i > 0 ? `<button class="btn alt sm" data-mv="${p.id}:-1">←</button>` : ''}
-            ${i < 3 ? `<button class="btn sm" data-mv="${p.id}:1">→</button>` : ''}
-            <button class="btn alt sm" data-rm="${p.id}">✕</button>
-          </div>
-        </div>`).join('')}
-      </div>`;
+    $('board').innerHTML=stages.map(function(s,i){
+      var items=pipe.filter(function(p){return p.stage===i});
+      return '<div class="col"><h3>'+s+' ('+items.length+')</h3>'+items.map(function(p){
+        return '<div class="lead"><b>'+esc(p.t)+'</b>Quote Required · '+esc(p.s)+(p.bid?'<br>Your bid: '+money(p.bid)+' in '+p.days+' days':'')+'<div>'+(i>0?'<button class="btn alt sm" data-mv="'+p.id+':-1" aria-label="Move back">←</button>':'')+(i<3?'<button class="btn sm" data-mv="'+p.id+':1" aria-label="Move forward">→</button>':'')+'<button class="btn alt sm" data-rm="'+p.id+'">Remove</button></div></div>';
+      }).join('')+'</div>';
     }).join('');
   }
 
-  /* Live Server Stream Integration */
-  var paused = false, live = false, es = null, seen = {}, base0 = '', key0 = '';
-  
-  function addServer(arr){
-    if(paused) return;
-    var add = [];
-    arr.forEach(x => {
-      var key = x.key || x.id;
-      if(seen[key]) return;
-      seen[key] = 1;
-      add.push({
-        id: key,
-        t: x.t || x.title,
-        c: x.c || x.cat || 'Web apps',
-        s: x.s || x.source || 'Live Feed',
-        d: x.d || x.dir || '',
-        fullDesc: x.fullDesc || x.d || x.dir || '',
-        t0: x.t0 || x.time || Date.now()
-      });
-    });
-    if(!add.length) return;
-    jobs = add.concat(jobs).slice(0, 200);
-    list(); status();
+  var people=[
+   {id:"p1",n:"Amara O.",role:"Full-stack web developer",sk:["React","Node","Shopify"],r:35,loc:"Nigeria",av:"Available now",bio:"Builds online stores and dashboards."},
+   {id:"p2",n:"Diego R.",role:"Unity game developer",sk:["Unity","C#","Mobile games"],r:45,loc:"Mexico",av:"Available now",bio:"Shipped four casual mobile games."},
+   {id:"p3",n:"Priya S.",role:"UI and web designer",sk:["Figma","WordPress","Landing pages"],r:30,loc:"India",av:"Part time",bio:"Clean, fast marketing sites."},
+   {id:"p4",n:"Lukas M.",role:"Backend engineer",sk:["Python","APIs","Game servers"],r:55,loc:"Germany",av:"Available now",bio:"Realtime systems and integrations."},
+   {id:"p5",n:"Thandi N.",role:"Mobile app developer",sk:["Flutter","Firebase","iOS"],r:40,loc:"South Africa",av:"Available now",bio:"Delivery and booking apps."},
+   {id:"p6",n:"Mei L.",role:"AI automation specialist",sk:["Python","Chatbots","OpenAI API"],r:60,loc:"Singapore",av:"Part time",bio:"Support bots and workflow automation."},
+   {id:"p7",n:"Omar H.",role:"WordPress developer",sk:["WordPress","PHP","SEO"],r:25,loc:"Egypt",av:"Available now",bio:"Fast turnaround on business sites."},
+   {id:"p8",n:"Sofia K.",role:"Godot game developer",sk:["Godot","GDScript","2D art"],r:38,loc:"Brazil",av:"Part time",bio:"Platformers and level design."}
+  ],team=[],mine=[];
+  try{team=JSON.parse(localStorage.getItem('sd_team')||'[]');mine=JSON.parse(localStorage.getItem('sd_free')||'[]')}catch(e){team=[];mine=[]}
+  function saveF(){try{localStorage.setItem('sd_team',JSON.stringify(team));localStorage.setItem('sd_free',JSON.stringify(mine))}catch(e){}}
+  var LBL={available:'Available now',busy:'Busy',offline:'Offline'};
+  var REP={p1:[4.9,42],p2:[4.7,18],p3:[4.8,31],p4:[4.6,25],p5:[4.9,12],p6:[4.5,9],p7:[4.4,60],p8:[4.7,14]};
+  function stOf(p){return p.st||(p.av==='Part time'?'busy':'available')}
+  function rep(p){var r=REP[p.id]||[0,0];return {rating:r[0],n:r[1],bayes:(5*4+r[0]*r[1])/(5+r[1])}}
+  function catOf(p){var k=p.sk.join(' ').toLowerCase();return /unity|godot|game/.test(k)?'Games':/flutter|ios|android/.test(k)?'Mobile apps':/wordpress|shopify|figma|landing|seo/.test(k)?'Websites':/chatbot|openai|automation/.test(k)?'AI and automation':'Web apps'}
+  function scoreCand(j,p){
+    var text=(j.t+' '+(j.d||'')).toLowerCase(),hits=p.sk.filter(function(x){return text.indexOf(x.toLowerCase())>-1}).length;
+    var skill=Math.min(1,hits/2),cat=catOf(p)===j.c?1:0,st=stOf(p),av=st==='available'?1:st==='busy'?.3:0,r=rep(p);
+    var sc=.35*skill+.20*cat+.20*av+.15*(r.bayes/5)+.10*0.5,why=[];
+    if(hits)why.push(hits+' matching skill'+(hits>1?'s':''));if(cat)why.push('right job type');why.push(LBL[st].toLowerCase());if(r.n)why.push('rated '+r.rating);
+    return {score:Math.round(sc*100),why:why};
+  }
+  function mt(j){
+    var top=null;
+    mine.concat(people).forEach(function(p){if(stOf(p)==='offline')return;var m=scoreCand(j,p);if(!top||m.score>top.m.score)top={p:p,m:m}});
+    return top?'<p style="margin-top:8px;font-size:13px">Best match: <b>'+esc(top.p.n)+'</b> · '+top.m.score+'% · '+LBL[stOf(top.p)]+' <button class="btn alt sm" data-rank="'+j.id+'" style="margin-left:6px">See all matches</button></p>':'';
+  }
+  function fillMj(want){
+    var v=want||$('fmj').value,l=jobs.slice(0,30),sel=find(+v);
+    if(sel&&l.indexOf(sel)<0)l.unshift(sel);
+    $('fmj').innerHTML='<option value="">Rank by job: none</option>'+l.map(function(j){return '<option value="'+j.id+'">'+esc(j.t.slice(0,48))+'</option>'}).join('');
+    if(sel)$('fmj').value=v;
+  }
+  function flist(){
+    var t=$('fq').value.toLowerCase(),a=$('fa').value,mj=find(+$('fmj').value);
+    var out=mine.concat(people).filter(function(p){return (a==='Any availability'||LBL[stOf(p)]===a)&&(!t||(p.n+' '+p.role+' '+p.sk.join(' ')).toLowerCase().indexOf(t)>-1)}).map(function(p){return {p:p,m:mj?scoreCand(mj,p):null}});
+    if(mj)out.sort(function(x,y){return y.m.score-x.m.score});
+    $('fc').textContent=out.length+' freelancer'+(out.length===1?'':'s')+(mj?' ranked for "'+mj.t+'"':' looking for work')+'. Shortlisted: '+team.length+'. Statuses change on their own to show how live availability will work.';
+    $('fl').innerHTML=out.map(function(o){
+      var p=o.p,f=team.indexOf(p.id)>-1,st=stOf(p),r=rep(p),own=String(p.id).charAt(0)==='m';
+      return '<article class="person"><h3>'+esc(p.n)+(o.m?' <span class="badge2">'+o.m.score+'% match</span>':'')+'</h3><p>'+esc(p.role)+' · '+esc(p.loc)+' · '+(r.n?'★ '+r.rating+' ('+r.n+' jobs)':'New')+'</p><p>'+esc(p.bio)+'</p>'+(o.m?'<p><i>'+esc(o.m.why.join(', '))+'</i></p>':'')+'<div class="meta">'+p.sk.map(function(x){return '<span>'+esc(x)+'</span>'}).join('')+'</div><div class="row"><span><b>$'+p.r+'/hr</b> · <span class="st '+st+'">● '+LBL[st]+'</span></span><span style="display:flex;gap:6px">'+(own?'<button class="btn alt sm" data-st="'+p.id+'">Set status</button>':'')+'<button class="btn alt sm" data-msg="'+p.id+'">Message</button><button class="btn sm'+(f?'':' alt')+'" data-fav="'+p.id+'">'+(f?'Shortlisted':'Shortlist')+'</button></span></div></article>';
+    }).join('')||'<p style="color:var(--muted)">No freelancers match. Try another skill.</p>';
   }
 
+  var nid=pipe.reduce(function(m,p){return Math.max(m,p.id)},100),paused=false,lastUp=Date.now();
   function status(){
-    $('ls').textContent = (paused ? 'Paused' : 'Live Stream') + ' · ' + jobs.length + ' active jobs';
-    $('ld').style.background = paused ? '#9aa5c4' : '#0a9f62';
+    $('ls').textContent=(paused?'Paused':'Live')+(live?' from server':'')+' · updated '+new Date(lastUp).toLocaleTimeString()+' · '+jobs.length+' jobs';
+    $('ld').style.background=paused?'#9aa5c4':'#0a9f62';
+  }
+
+  function fillSel(){
+    var v=$('pj').value;
+    $('pj').innerHTML=jobs.map(function(j){return '<option value="'+j.id+'">'+esc(j.t)+'</option>'}).join('');
+    if(find(+v))$('pj').value=v;
+  }
+  function tab(n){
+    ['jobs','prop','pipe','free'].forEach(function(x){$(x).hidden=x!==n});
+    Array.prototype.forEach.call(document.querySelectorAll('.tab'),function(b){b.setAttribute('aria-selected',b.dataset.t===n)});
+  }
+  var DEL={"Websites":["Responsive design for phone and desktop","Contact form and basic SEO setup","Speed optimisation and testing","Handover with a short training video"],"Games":["Playable build with the core mechanics","Menus, levels and sound","Testing on target devices","Source code and release support"],"Web apps":["Secure login and admin panel","Core features built to your brief","Testing and bug fixing","Deployment and documentation"],"Mobile apps":["App for iOS and Android","Accounts and push notifications","Testing on real devices","Store submission support"],"AI and automation":["Integration with your tools and data","Prompt and workflow design","Testing with real examples","Documentation and handover"]};
+  function dl(b){return 10}
+  function gen(){
+    var j=find(+$('pj').value)||jobs[0],n=$('pn').value||'Jene van der Walt',s=$('ps').value,c=$('pc').value,tn=$('pt').value;
+    var pr=ov?ov.price:null,days=ov?ov.days:10,dv=DEL[j.c]||DEL.Websites,sig=n+'\n'+($('pb').value||'Scale Desk')+(c?'\n'+c:''),sub='Proposal: '+j.t,body;
+    if(tn==='short'){
+      body='Hello,\n\nI can deliver "'+j.t+'" for '+(pr?money(pr):'a price to be agreed')+' in about '+days+' days. '+s+'\n\nShall we start this week?\n\n'+sig;
+    }else{
+      var fr=tn==='friendly';
+      body=(fr?'Hi there!\n\nThanks for sharing ':'Hello,\n\nThank you for posting ')+'"'+j.t+'". I have read the brief. Scope as I understand it: '+(j.fullDesc||j.d)+'\n\nAbout me\n'+s+'\n\nWhat you will receive\n'+dv.map(function(x){return '• '+x}).join('\n')+'\n\nTimeline and price\n• Delivery in about '+days+' days\n• Total price: '+(pr?money(pr):'a price to be agreed')+', paid in three milestones (30% to start, 40% at the midpoint, 30% on delivery)\n• Two rounds of revisions included\n\nNext steps\nReply to this message and we can confirm the details in a short call, then I can start right away.\n\n'+(fr?'Thanks for considering me,\n':'Kind regards,\n')+sig;
+    }
+    $('po').textContent='Subject: '+sub+'\n\n'+body;
+    $('em').href='mailto:?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(body);
+    $('wa').href='https://wa.me/?text='+encodeURIComponent(body);
+  }
+
+  var live=false,es=null,seen={},base0='',key0='';
+  try{$('srv').value=localStorage.getItem('sd_srv')||'';$('key').value=localStorage.getItem('sd_key')||''}catch(e){}
+  function addServer(arr){
+    if(paused)return;
+    var add=[];
+    arr.forEach(function(x){
+      var key=x.key||x.id;
+      if(seen[key])return;
+      seen[key]=1;
+      add.push({id:key,t:x.t,c:x.c,s:x.s,d:x.d,fullDesc:x.fullDesc||x.d,loc:x.loc,t0:x.t0,url:x.url});
+    });
+    if(!add.length)return;
+    add.sort(function(a,b){return b.t0-a.t0});
+    jobs=add.concat(jobs).slice(0,200);lastUp=Date.now();list();status();
+  }
+
+  function pull(){
+    fetch(base0+'/api/jobs'+key0).then(function(r){return r.json()}).then(addServer).catch(function(){$('ls').textContent='Could not refresh from the server.'});
   }
 
   function connect(){
-    var base = $('srv').value.trim().replace(/\/+$/,''), key =$('key').value.trim();
-    if(!base) base = window.location.origin;
-    base0 = base; key0 = key ? '?key=' + encodeURIComponent(key) : '';
-    
-    fetch(base0 + '/api/jobs' + key0).then(r => r.json()).then(arr => {
-      live = true; addServer(arr);
-      if(es) es.close();
-      es = new EventSource(base0 + '/api/stream' + key0);
-      es.onmessage = e => { try{ addServer([JSON.parse(e.data)]); }catch(x){} };
-    }).catch(() => { $('ls').textContent = 'Fetching local jobs feed...'; });
+    var base=$('srv').value.trim().replace(/\/+$/,''),key=$('key').value.trim();
+    if(!/^https:\/\/|^http:\/\/localhost/i.test(base)){$('ls').textContent='Enter the server address, starting with https://';return}
+    try{localStorage.setItem('sd_srv',base);localStorage.setItem('sd_key',key)}catch(e){}
+    if(es)es.close();
+    base0=base;key0=key?'?key='+encodeURIComponent(key):'';
+    $('ls').textContent='Connecting…';
+    fetch(base0+'/api/jobs'+key0).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(arr){
+      live=true;jobs=[];seen={};addServer(arr);
+      es=new EventSource(base0+'/api/stream'+key0);
+      es.onmessage=function(e){try{addServer(JSON.parse(e.data))}catch(x){}};
+      es.onerror=function(){$('ls').textContent='Reconnecting to the server…'};
+      $('cn').textContent='Connected';
+    }).catch(function(){$('ls').textContent='Could not reach server. Check address/key.'});
   }
 
-  // Dialog Quote Handler
-  var bj = null;
+  var bj=null,ov=null;
+  function bidMsg(){
+    ov={price:+$('ba').value||null,days:+$('bdays').value||10};
+    fillSel();$('pj').value=bj.id;gen();ov=null;
+    $('bp').value=$('po').textContent.replace(/^Subject:[^\n]*\n\n/,'');
+  }
+
   function openBid(id){
-    bj = find(id); if(!bj) return;
-    $('bdt').textContent = 'Submit Quote for: ' + bj.t;
-    $('bdm').textContent = 'Requirement Snippet: ' + (bj.fullDesc \vert{}\vert{} bj.d).slice(0, 150) + '...';$('bd').showModal();
+    bj=find(id);if(!bj)return;
+    $('bdt').textContent='Submit Quote for: '+bj.t;
+    $('bdm').textContent='Source: '+bj.s+(bj.loc?' · '+bj.loc:'');
+    $('ba').value='';$('bdays').value=10;
+    bidMsg();$('bd').showModal();
   }
 
-  document.addEventListener('click', function(e){
-    var b = e.target.closest('button'); if(!b) return;
-    if(b.dataset.t){
-      ['jobs','prop','pipe'].forEach(x => $(x).hidden = x !== b.dataset.t);
-      document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', t.dataset.t === b.dataset.t));
-    }
-    if(b.id === 'rf'){ connect(); }
-    if(b.id === 'pz'){ paused = !paused; b.textContent = paused ? 'Resume live' : 'Pause live'; status(); }
-    if(b.dataset.bid){ openBid(b.dataset.bid); }
-    if(b.id === 'bc'){ $('bd').close(); }
-    if(b.id === 'bs'){
-      var price = +$('ba').value, days = +$('bdays').value, pitch =$('bp').value;
-      if(bj && price > 0){
-        var item = pipe.find(p => p.id === bj.id);
-        if(!item){ pipe.push({ id: bj.id, t: bj.t, stage: 1, bid: price, days: days, pitch: pitch }); }
-        else { item.stage = 1; item.bid = price; item.days = days; }
-        save(); board(); stats(); list(); $('bd').close();
-      }
-    }
-    if(b.id === 'roomsBtn'){ window.location.href = '/admin.html'; }
-    if(b.id === 'cn'){ connect(); }
-  });
+  function submitBid(){
+    var a=+$('ba').value,d=+$('bdays').value,m=$('bp').value.trim();
+    if(!(a>0)){$('ba').focus();return}
+    if(!(d>0)){$('bdays').focus();return}
+    if(!m){$('bp').focus();return}
+    lead(bj.id,1);
+    var e=pipe.filter(function(p){return p.id===bj.id})[0];
+    if(e){e.bid=a;e.days=d;e.msg=m;save();board();stats();list()}
+    $('bd').close();
+  }
 
-  // Guides Modal Loader
+  var tgt=null;
+  function best(p){var m=null,sc=-1;jobs.slice(0,50).forEach(function(j){var x=scoreCand(j,p).score;if(x>sc){sc=x;m=j}});return m||jobs[0]}
+  function fMsg(){
+    if(!tgt)return;
+    var j=find(+$('fj').value)||jobs[0],n=$('pn').value||'Jene van der Walt',c=$('pc').value;
+    var body='Hi '+tgt.n.split(' ')[0]+',\n\nI am '+n+' from '+($('pb').value||'Scale Desk')+'. I have a new project that matches your skills ('+tgt.sk.join(', ')+').\n\nProject: '+j.t+'\nType: '+j.c+'\nScope: '+(j.fullDesc||j.d)+'\nQuote Required\nEstimated timeline: about 10 days\n\nIf you are available, please reply with:\n• Your availability and start date\n• Your quote for this project\n• Two examples of similar work\n\nI will share the full brief once you confirm.\n\nBest regards,\n'+n+'\n'+($('pb').value||'Scale Desk')+(c?'\n'+c:'');
+    $('fo').textContent=body;
+    $('fem').href='mailto:?subject='+encodeURIComponent('Project offer: '+j.t)+'&body='+encodeURIComponent(body);
+    $('fwa').href='https://wa.me/?text='+encodeURIComponent(body);
+  }
+
   window.showGuide = function(type){
     var g = {
       proposals: "Winning quotes focus on client solutions rather than just listing skills. Keep your message under 3 paragraphs, ask 1 clarifying question, and outline a delivery timeline.",
@@ -310,14 +400,56 @@ dialog::backdrop{background:rgba(0,0,0,0.75)}
       closing: "Offer clients an immediate 10-minute discovery message or consultation to outline project milestones before payment terms are locked."
     };
     $('guideTitle').textContent = type === 'proposals' ? 'How to Write Winning Quotes' : (type === 'pricing' ? 'Setting Your Freelance Rates' : 'Closing High-Value Clients');
-    $('guideBody').textContent = g[type];$('guideModal').showModal();
+    $('guideBody').textContent = g[type];
+    $('guideModal').showModal();
   };
 
-  // Initial Load
-  var cats = ["All types", "Websites", "Web apps", "Games", "Mobile apps", "AI and automation"];
-  $('cat').innerHTML = cats.map(c => `<option>${c}</option>`).join('');
-  $('srv').value = window.location.origin;
-  connect(); board(); stats();
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;
+    if(b.dataset.t){tab(b.dataset.t);if(b.dataset.t==='prop'){fillSel();gen()}if(b.dataset.t==='free'){fillMj();flist()}}
+    if(b.id==='rf'){if(live)pull();b.textContent='Refreshing…';b.disabled=true;setTimeout(function(){b.textContent='Refresh';b.disabled=false},600)}
+    if(b.id==='pz'){paused=!paused;b.textContent=paused?'Resume live':'Pause live';status()}
+    if(b.dataset.save)lead(b.dataset.save,0);
+    if(b.dataset.write){fillSel();$('pj').value=b.dataset.write;gen();tab('prop')}
+    if(b.dataset.mv){var a=b.dataset.mv.split(':'),p=pipe.filter(function(z){return z.id===a[0]||z.id===+a[0]})[0];p.stage+=+a[1];save();board();stats()}
+    if(b.dataset.rm){pipe=pipe.filter(function(z){return z.id!==b.dataset.rm&&z.id!==+b.dataset.rm});save();board();stats()}
+    if(b.dataset.fav){var i=team.indexOf(b.dataset.fav);if(i>-1)team.splice(i,1);else team.push(b.dataset.fav);saveF();flist()}
+    if(b.id==='fadd'){
+      var nm=$('fn').value.trim(),sk=$('fs').value.split(',').map(function(s){return s.trim()}).filter(Boolean),rt=+$('fr').value;
+      if(!nm||!sk.length||!rt){(nm?(sk.length?$('fr'):$('fs')):$('fn')).focus();return}
+      mine.unshift({id:"m"+Date.now(),n:nm,role:"New on ScaleDesk",sk:sk,r:rt,loc:"Worldwide",av:"Available now",bio:"Looking for new projects."});
+      $('fn').value=$('fs').value=$('fr').value='';saveF();flist();
+    }
+    if(b.dataset.msg){
+      tgt=mine.concat(people).filter(function(z){return z.id===b.dataset.msg})[0];
+      $('fj').innerHTML=jobs.map(function(j){return '<option value="'+j.id+'">'+esc(j.t)+'</option>'}).join('');
+      $('fj').value=best(tgt).id;$('fmt').textContent='Message to '+tgt.n;
+      $('fm').hidden=false;fMsg();$('fm').scrollIntoView({behavior:'smooth',block:'start'});
+    }
+    if(b.id==='fcl')$('fm').hidden=true;
+    if(b.id==='fcp'){try{navigator.clipboard.writeText($('fo').textContent);b.textContent='Copied'}catch(x){b.textContent='Select and copy manually'}setTimeout(function(){b.textContent='Copy message'},1800)}
+    if(b.dataset.rank){tab('free');fillMj(b.dataset.rank);flist();window.scrollTo(0,0)}
+    if(b.dataset.st){var q=mine.filter(function(z){return z.id===b.dataset.st})[0];if(q){q.st={available:'busy',busy:'offline',offline:'available'}[stOf(q)];saveF();flist()}}
+    if(b.id==='rooms'){var ru=(base0||$('srv').value.trim()).replace(/\/+$/,'');if(/^https:\/\/|^http:\/\/localhost/i.test(ru))window.open(ru+'/admin','_blank','noopener');else $('rn').textContent='Enter your server address on the Find jobs tab first.'}
+    if(b.id==='cn')connect();
+    if(b.dataset.bid)openBid(b.dataset.bid);
+    if(b.id==='bc')$('bd').close();
+    if(b.id==='bs')submitBid();
+    if(b.id==='bcp'){try{navigator.clipboard.writeText($('bp').value);b.textContent='Copied'}catch(x){b.textContent='Select and copy manually'}setTimeout(function(){b.textContent='Copy message'},1800)}
+    if(b.id==='gen')gen();
+    if(b.id==='ap')lead(+$('pj').value||$('pj').value,1);
+    if(b.id==='cp'){try{navigator.clipboard.writeText($('po').textContent);b.textContent='Copied'}catch(x){b.textContent='Select and copy manually'}}
+  });
+
+  $('q').oninput=$('cat').oninput=list;
+  $('fq').oninput=$('fa').oninput=flist;
+  $('fmj').addEventListener('input',flist);
+  ['ba','bdays'].forEach(function(i){$(i).addEventListener('input',bidMsg)});
+  ['pj','pn','pb','pc','ps','pt'].forEach(function(i){$(i).addEventListener('input',gen)});
+  ['fj','pn','pb','pc'].forEach(function(i){$(i).addEventListener('input',fMsg)});
+  
+  list();board();stats();flist();status();gen();
+  setInterval(function(){if(document.hidden)return;var p=people[Math.floor(Math.random()*people.length)];p.st=['available','available','busy','offline'][Math.floor(Math.random()*4)];if(!$('free').hidden)flist()},5000);
 })();
 </script>
 </body>
