@@ -63,18 +63,17 @@ async function fetchFreelancer() {
         encodeURIComponent(q) + '&limit=20&job_details=true';
       const d = await getJson(url, FL_TOKEN ? { 'freelancer-oauth-v1': FL_TOKEN } : {});
       for (const p of (d.result && d.result.projects) || []) {
-        const min = (p.budget && p.budget.minimum) || 0;
-        const max = (p.budget && p.budget.maximum) || min;
-        const rate = (p.currency && p.currency.exchange_rate) || 1;
         const skills = (p.jobs || []).map(j => j.name).join(' ');
-        const desc = strip(p.preview_description).slice(0, 220);
+        const fullDescription = strip(p.preview_description || p.description || '');
+        const shortSnippet = fullDescription.slice(0, 220);
+
         pushJob({
           id: 'freelancer:' + p.id,
           title: p.title,
-          dir: (p.type === 'hourly' ? 'Hourly rate: ' : '') + desc,
-          budget: Math.round(((min + max) / 2) * rate / 18) * 10,
+          dir: shortSnippet,
+          fullDesc: fullDescription,
           source: 'Freelancer',
-          cat: classify(p.title + ' ' + desc + ' ' + skills),
+          cat: classify(p.title + ' ' + shortSnippet + ' ' + skills),
           time: (p.time_submitted ? p.time_submitted * 1000 : Date.now()),
           url: p.seo_url ? ('https://www.freelancer.com/projects/' + p.seo_url) : ('https://www.freelancer.com/projects/' + p.id)
         });
@@ -91,14 +90,16 @@ async function fetchRemoteOk() {
     const data = await getJson('https://remoteok.com/api');
     for (const p of (Array.isArray(data) ? data.slice(1, 30) : [])) {
       if (!p || !p.id) continue;
-      const desc = strip(p.description).slice(0, 220);
+      const fullDescription = strip(p.description || '');
+      const shortSnippet = fullDescription.slice(0, 220);
+
       pushJob({
         id: 'remoteok:' + p.id,
         title: p.position + (p.company ? (' — ' + p.company) : ''),
-        dir: desc,
-        budget: p.salary_min ? Math.round(p.salary_min / 18) : 5000,
+        dir: shortSnippet,
+        fullDesc: fullDescription,
         source: 'RemoteOK',
-        cat: classify(p.position + ' ' + desc + ' ' + (p.tags || []).join(' ')),
+        cat: classify(p.position + ' ' + shortSnippet + ' ' + (p.tags || []).join(' ')),
         time: p.date ? new Date(p.date).getTime() : Date.now(),
         url: p.url || 'https://remoteok.com'
       });
