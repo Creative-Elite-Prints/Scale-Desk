@@ -1,5 +1,7 @@
 // ScaleDesk live job server. Needs Node 18 or newer. No packages to install.
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
 const rooms = require('./rooms');
 
 const PORT = process.env.PORT || 3000;
@@ -169,5 +171,17 @@ http.createServer((req, res) => {
     req.on('close', () => clients.delete(res));
     return;
   }
+
+  // Serve static files from the /public folder
+  let file = u.pathname === '/' ? '/index.html' : u.pathname;
+  let filePath = path.join(__dirname, 'public', file);
+
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+    const ext = path.extname(filePath).toLowerCase();
+    const mimeTypes = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.jpg': 'image/jpeg' };
+    res.writeHead(200, { 'Content-Type': mimeTypes[ext] || 'application/octet-stream' });
+    return res.end(fs.readFileSync(filePath));
+  }
+
   send(res, 404, { error: 'Not found' });
 }).listen(PORT, () => console.log('ScaleDesk server running on port ' + PORT + ' with sources: ' + SOURCES.join(', ')));
