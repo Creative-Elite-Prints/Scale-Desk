@@ -1,11 +1,11 @@
 // ScaleDesk live job server. Needs Node 18 or newer. No packages to install.
 // It collects open jobs from several sources, keeps the newest, and pushes new ones to the page.
-const http = require('https://scale-desk.onrender.com');
+const http = require('http');
 const rooms = require('./rooms.js');
 
 const PORT = process.env.PORT || 3000;
 const ACCESS_KEY = process.env.ACCESS_KEY || '';          // optional password for the feed
-const ORIGIN = process.env.ALLOWED_ORIGIN || '*';         // set to your site address once hosted
+const ORIGIN = process.env.ALLOWED_ORIGIN || 'https://scale-desk.onrender.com';'*';         // set to your site address once hosted
 const FL_TOKEN = process.env.FREELANCER_TOKEN || '';      // optional Freelancer.com API token
 const SOURCES = (process.env.SOURCES || 'freelancer,remoteok').split(',').map(s => s.trim()).filter(Boolean);
 const KEYWORDS = (process.env.FREELANCER_KEYWORDS || 'website,wordpress,game,mobile app,web app,chatbot')
